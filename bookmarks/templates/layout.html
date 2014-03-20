@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{% static 'bookmarks/76ae8c0.css' %}" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ icon }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+        <script type="text/javascript" src="{% static 'bookmarks/js/jquery-2.1.0.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bookmarks/js/bootstrap.min.js' %}"></script>
+        {% endblock %}
+    </body>
+</html>
