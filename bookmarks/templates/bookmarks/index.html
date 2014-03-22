@@ -1,47 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}
-<header class="header">
-    <nav class="container-fluid nav navbar-inverse">
-        <h3 class="brand"><a href="">Zakładnik</a></h3>
-        <ul class="nav nav-tabs">
-            <li {% if False %}class="active"{% endif %}>
-                <a href="">
-                    <span class="glyphicon glyphicon-share"></span>Sugestie
-                </a>
-            </li>
-            <li {% if False %}class="active"{% endif %}>
-                <a href="">
-                    <span class="glyphicon glyphicon-check"></span>Moje
-                </a>
-            </li>
-            <li {% if False %}class="active"{% endif %}>
-                <a href="">
-                    <span class="glyphicon glyphicon-plus"></span>Dodaj
-                </a>
-            </li>
-    {% if not app.user %}
-            <li class="pull-right ">
-                <a href="">
-                    <span class="glyphicon glyphicon-pencil"></span>Rejestracja
-                </a>
-            </li>
-            <li class="pull-right active">
-                <a href="">
-                    <span class="glyphicon glyphicon-user"></span>Logowanie
-                </a>
-            </li>
-    {% else %}
-            <li class="pull-right">
-                <a href="">
-                    <span class="glyphicon glyphicon-user"></span>Wyloguj
-                </a>
-            </li>
-    {% endif %}
-        </ul>
-    </nav>
-</header>
-<section class="container">
+
     {% block content %}
     
     <article data-ride="carousel" class="carousel slide" id="carousel-example-captions">
@@ -147,13 +106,4 @@
         </div>
     </div>
     {% endblock %}
-</section>
 
-
-<footer>
-    <div class="navbar-inverse">
-        <p class="container text-info">aaaa</p>
-    </div>
-</footer>
-
-{% endblock %}
