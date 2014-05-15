@@ -20,9 +20,7 @@ class FontsTestCase(TestCase):
     def testFileNotExists(self):
         names = [
             'Glyphicons-halflings-regular.ttf',
-            'Glyphicons-halflings-regular.svg',
-            'Glyphicons-halflings-regular.eot',
-            'Glyphicons-halflings-regular.woff'
+            'Glyphicons-halflings-regular.svg'
         ]
         fontDir = join(settings.BASE_DIR ,'fonts' , settings.STATIC_URL[1:], 'fonts')
 
