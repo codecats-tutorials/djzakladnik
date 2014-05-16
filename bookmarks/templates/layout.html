@@ -13,7 +13,7 @@
         {% block header %}
             <header class="header">
                 <nav class="container-fluid nav navbar-inverse">
-                    <h3 class="brand"><a href="">Zakładnik</a></h3>
+                    <h3 class="brand"><a href="{% url 'bookmarks:index' %}">Zakładnik</a></h3>
                     <ul class="nav nav-tabs">
                         <li {% if False %}class="active"{% endif %}>
                             <a href="">
@@ -30,20 +30,21 @@
                                 <span class="glyphicon glyphicon-plus"></span>Dodaj
                             </a>
                         </li>
-                {% if not app.user %}
+                {% if request.user.is_authenticated == False %}
                         <li class="pull-right ">
                             <a href="">
                                 <span class="glyphicon glyphicon-pencil"></span>Rejestracja
                             </a>
                         </li>
-                        <li class="pull-right active">
+                        {% url 'bookmarks:login' as loginUrl %}
+                        <li class="pull-right {% if request.get_full_path == loginUrl %}active{%endif%}">
                             <a href="{% url 'bookmarks:login' %}">
                                 <span class="glyphicon glyphicon-user"></span>Logowanie
                             </a>
                         </li>
                 {% else %}
                         <li class="pull-right">
-                            <a href="">
+                            <a href="{% url 'bookmarks:logout' %}?next={% url 'bookmarks:index' %}">
                                 <span class="glyphicon glyphicon-user"></span>Wyloguj
                             </a>
                         </li>
