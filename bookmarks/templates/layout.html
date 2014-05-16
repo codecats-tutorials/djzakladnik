@@ -31,13 +31,14 @@
                             </a>
                         </li>
                 {% if request.user.is_authenticated == False %}
-                        <li class="pull-right ">
-                            <a href="">
+                        {% url 'bookmarks:registration' as currentUrl %}
+                        <li class="pull-right {% if request.get_full_path == currentUrl %}active{% endif %}">
+                            <a href="{% url 'bookmarks:registration' %}">
                                 <span class="glyphicon glyphicon-pencil"></span>Rejestracja
                             </a>
                         </li>
-                        {% url 'bookmarks:login' as loginUrl %}
-                        <li class="pull-right {% if request.get_full_path == loginUrl %}active{%endif%}">
+                        {% url 'bookmarks:login' as currentUrl %}
+                        <li class="pull-right {% if request.get_full_path == currentUrl %}active{% endif %}">
                             <a href="{% url 'bookmarks:login' %}">
                                 <span class="glyphicon glyphicon-user"></span>Logowanie
                             </a>
