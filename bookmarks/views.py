@@ -1,9 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
-from bookmarks.forms import UserCreationZakladnikForm
+from bookmarks.forms import UserForm
 
 
 def index(request):
@@ -16,12 +13,15 @@ def index(request):
 def registration(request):
     #form = UserCreationForm()
     if request.method == 'POST':
-        form = UserCreationZakladnikForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            user.set_password(user.password)
+            user.save()
+
             return redirect(reverse('bookmarks:index'))
     else:
-        form = UserCreationZakladnikForm()
+        form = UserForm()
 
     return render(request, 'registration/registration.html', {
         'form' : form
