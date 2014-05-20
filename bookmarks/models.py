@@ -9,4 +9,4 @@ class Bookmark(models.Model):
     url = models.CharField(max_length = 255)
     description = models.TextField()
     author = models.ForeignKey(Profile)
-    subscribers = models.ManyToManyField(Profile, related_name = 'subscribers+')
+    subscribers = models.ManyToManyField(Profile, related_name = 'subscribers')

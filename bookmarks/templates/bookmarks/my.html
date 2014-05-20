@@ -2,6 +2,21 @@
 
 
 {% block content %}
-{{ bookmarks.count }}
+    {% for bookmark in bookmarks %}
+        <div class="col-md-4">
+            <div>
+                <h3>{{ bookmark.title }}</h3>
+                <p>
+                    <a href="{{ bookmark.url }}">
+                        {% if bookmark.title %}
+                            {{ bookmark.title }}
+                        {% else %}
+                            {{ bookmark.url }}
+                        {% endif %}
+                    </a>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 

@@ -40,70 +40,30 @@
       </a>
     </article>
     <div class="row container bookmarks">
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
+        {% for bookmark in bookmarks %}
+
+            <div class="col-md-4">
+                <div>
+                    <h3>{{ bookmark.title }}</h3>
+                    <p>
+                        <a href="{{ bookmark.url }}">
+                            {% if bookmark.title %}
+                                {{ bookmark.title }}
+                            {% else %}
+                                {{ bookmark.url }}
+                            {% endif %}
+                        </a>
+                    </p>
+                    <p>
+                    {% if bookmark not in subscribedBookmarks.all %}
+                        <a href="{% url 'bookmarks:subscribe' id=bookmark.id %}">Subskrybuj</a>
+                    {% else %}
+                        <a href="{% url 'bookmarks:unsubscribe' id=bookmark.id %}">Odsubskrybuj</a>
+                    {% endif %}
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div>
-                <h3>Mój-klub</h3>
-                <p>
-                    <a href="#">moj-klub</a>
-                </p>
-            </div>
-        </div>
+        {% endfor %}
     </div>
     {% endblock %}
 

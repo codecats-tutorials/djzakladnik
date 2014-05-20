@@ -48,7 +48,7 @@
                 {% else %}
                         <li class="pull-right">
                             <a href="{% url 'bookmarks:logout' %}?next={% url 'bookmarks:index' %}">
-                                <span class="glyphicon glyphicon-user"></span>Wyloguj
+                                <span class="glyphicon glyphicon-user"></span>Wyloguj {{ request.user.username }}
                             </a>
                         </li>
                 {% endif %}

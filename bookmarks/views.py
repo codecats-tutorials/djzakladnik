@@ -6,11 +6,36 @@ from bookmarks.models import Profile, Bookmark
 
 
 def index(request):
-    return render(request, 'bookmarks/index.html')
+    bookmarks = Bookmark.objects.all()
+    subscribedBookmarks = None
+    try:
+        profile = Profile.objects.get(user_id = request.user.id)
+        subscribedBookmarks = Bookmark.objects.filter(subscribers = profile)
+    except:
+        profile = None
+
+    return render(request, 'bookmarks/index.html', {
+        'bookmarks': bookmarks,
+        'subscribedBookmarks': subscribedBookmarks
+    })
+
+def subscribe(request, id):
+    profile = Profile.objects.get(user_id = request.user.id)
+    bookmark = Bookmark.objects.get(pk=id)
+    bookmark.subscribers.add(profile)
+
+    return redirect(reverse('bookmarks:index'))
+
+def unsubscribe(request, id):
+    profile = Profile.objects.get(user_id = request.user.id)
+    bookmark = Bookmark.objects.get(pk=id)
+    bookmark.subscribers.remove(profile)
+
+    return redirect(reverse('bookmarks:my'))
 
 def my(request):
     profile = Profile.objects.get(user_id = request.user.id)
-    bookmarks = profile.bookmark_set.all()
+    bookmarks = Bookmark.objects.filter(subscribers = profile)
 
     return render(request, 'bookmarks/my.html', {
         'bookmarks': bookmarks
@@ -20,12 +45,15 @@ def add(request):
     if request.method == 'POST':
         form = BookmarkForm(request.POST)
         if form.is_valid():
-            bookmark = form.save(commit = False)
+            bookmark = Bookmark.objects.get(url=form.cleaned_data['url'])
             profile = Profile.objects.get(user_id = request.user.id)
-            bookmark.author = profile
-            bookmark.save()
+            if bookmark is None:
+                bookmark = form.save(commit = False)
+                bookmark.author = profile
+                bookmark.save()
             bookmark.subscribers.add(profile)
 
+            return redirect(reverse('bookmarks:index'))
     else:
         form = BookmarkForm()
 
