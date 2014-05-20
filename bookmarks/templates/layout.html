@@ -20,12 +20,14 @@
                                 <span class="glyphicon glyphicon-share"></span>Sugestie
                             </a>
                         </li>
-                        <li {% if False %}class="active"{% endif %}>
-                            <a href="">
+                        {% url 'bookmarks:my' as currentUrl %}
+                        <li {% if request.get_full_path == currentUrl %}class="active"{% endif %}>
+                            <a href="{% url 'bookmarks:my' %}">
                                 <span class="glyphicon glyphicon-check"></span>Moje
                             </a>
                         </li>
-                        <li {% if False %}class="active"{% endif %}>
+                        {% url 'bookmarks:add' as currentUrl %}
+                        <li {% if request.get_full_path == currentUrl %}class="active"{% endif %}>
                             <a href="{% url 'bookmarks:add' %}">
                                 <span class="glyphicon glyphicon-plus"></span>Dodaj
                             </a>

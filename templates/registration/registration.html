@@ -3,11 +3,11 @@
 {% block title %}Rejestracja{% endblock %}
 
 {% block content %}
-  <h1>Utwórz konto</h1>
+    <h1>Utwórz konto</h1>
 
-  <form action="" method="post">
+    <form action="" method="post">
       {{ form.as_p }}
       {% csrf_token %}
       <input type="submit" value="Rejestracja">
-  </form>
+    </form>
 {% endblock %}
