@@ -15,8 +15,9 @@
                 <nav class="container-fluid nav navbar-inverse">
                     <h3 class="brand"><a href="{% url 'bookmarks:index' %}">Zakładnik</a></h3>
                     <ul class="nav nav-tabs">
-                        <li {% if False %}class="active"{% endif %}>
-                            <a href="">
+                        {% url 'bookmarks:suggestion' as currentUrl %}
+                        <li {% if request.get_full_path == currentUrl %}class="active"{% endif %}>
+                            <a href="{% url 'bookmarks:suggestion' %}">
                                 <span class="glyphicon glyphicon-share"></span>Sugestie
                             </a>
                         </li>

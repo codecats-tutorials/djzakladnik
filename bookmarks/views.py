@@ -19,6 +19,34 @@ def index(request):
         'subscribedBookmarks': subscribedBookmarks
     })
 
+# SELECT
+# *
+# , count(u.id) as sub_counter
+# FROM
+# zakladnik.Bookmark b
+# left join
+# user_bookmark ub ON b.id = ub.bookmark_id
+# left join
+# User u on ub.user_id = u.id
+# and b.id not in (
+#     select subb.id from Bookmark subb
+#     left join user_bookmark subub on subb.id = subub.bookmark_id
+#     left join User subu on subub.user_id = subu.id
+#     where subu.id = 10
+# )
+# where u.id <> 1
+# group by u.id
+# having sub_counter > 2
+def suggestion(request):
+    profile = Profile.objects.get(user_id = request.user.id)
+
+    subscribed = Bookmark.objects.filter(subscribers = profile)
+    print Bookmark.objects.exclude(subscribers = profile)
+
+    print subscribed
+
+    return render(request, 'bookmarks/suggestion.html')
+
 def subscribe(request, id):
     profile = Profile.objects.get(user_id = request.user.id)
     bookmark = Bookmark.objects.get(pk=id)

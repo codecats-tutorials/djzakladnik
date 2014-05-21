@@ -4,6 +4,7 @@ from django.contrib.auth.views import login, logout
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name = 'index'),
+    url(r'^suggestion/$', views.suggestion, name = 'suggestion'),
     url(r'^subscribe-(?P<id>[0-9]+)/$', views.subscribe, name = 'subscribe'),
     url(r'^unsubscribe-(?P<id>[0-9]+)/$', views.unsubscribe, name = 'unsubscribe'),
     url(r'^my/$', views.my, name = 'my'),
