@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 
-
 {% block content %}
     {% for bookmark in bookmarks %}
         <div class="col-md-4">
@@ -14,6 +13,9 @@
                             {{ bookmark.url }}
                         {% endif %}
                     </a>
+                </p>
+                <p>
+                    <a href="{% url 'bookmarks:unsubscribe' id=bookmark.id %}">Odsubskrybuj</a>
                 </p>
             </div>
         </div>

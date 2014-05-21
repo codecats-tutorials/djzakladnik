@@ -1,6 +1,26 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-abc
+    <div class="row container bookmarks">
+        {% for bookmark in bookmarks %}
+            <div class="col-md-4">
+                <div>
+                    <h3>{{ bookmark.title }}</h3>
+                    <p>
+                        <a href="{{ bookmark.url }}">
+                            {% if bookmark.title %}
+                                {{ bookmark.title }}
+                            {% else %}
+                                {{ bookmark.url }}
+                            {% endif %}
+                        </a>
+                    </p>
+                    <p>
+                        <a href="{% url 'bookmarks:subscribe' id=bookmark.id %}">Subskrybuj</a>
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 

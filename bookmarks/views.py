@@ -1,5 +1,7 @@
-from django.contrib import auth
+# -*- coding: utf-8 -*-
+from django.contrib import auth, messages
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from bookmarks.forms import UserForm, BookmarkForm
 from bookmarks.models import Profile, Bookmark
@@ -16,36 +18,20 @@ def index(request):
 
     return render(request, 'bookmarks/index.html', {
         'bookmarks': bookmarks,
-        'subscribedBookmarks': subscribedBookmarks
+        'subscribedBookmarks': subscribedBookmarks,
     })
 
-# SELECT
-# *
-# , count(u.id) as sub_counter
-# FROM
-# zakladnik.Bookmark b
-# left join
-# user_bookmark ub ON b.id = ub.bookmark_id
-# left join
-# User u on ub.user_id = u.id
-# and b.id not in (
-#     select subb.id from Bookmark subb
-#     left join user_bookmark subub on subb.id = subub.bookmark_id
-#     left join User subu on subub.user_id = subu.id
-#     where subu.id = 10
-# )
-# where u.id <> 1
-# group by u.id
-# having sub_counter > 2
 def suggestion(request):
     profile = Profile.objects.get(user_id = request.user.id)
 
     subscribed = Bookmark.objects.filter(subscribers = profile)
-    print Bookmark.objects.exclude(subscribers = profile)
+    flatList = subscribed.values_list('id', flat = True)
+    bookmarks = Bookmark.objects.annotate(num_sub = Count('subscribers')).exclude(subscribers = profile)\
+        .exclude(id__in = flatList).filter(num_sub__gt = 1).order_by('-num_sub')
 
-    print subscribed
-
-    return render(request, 'bookmarks/suggestion.html')
+    return render(request, 'bookmarks/suggestion.html', {
+        'bookmarks': bookmarks
+    })
 
 def subscribe(request, id):
     profile = Profile.objects.get(user_id = request.user.id)
@@ -115,6 +101,7 @@ def login(request):
     user = auth.authenticate(username = username, password = password)
     if user is not None and user.is_active:
         auth.login(request, user)
+        messages.add_message(request, messages.SUCCESS, 'Właśnie się zalogowałeś')
 
         return redirect(reverse('bookmarks:index'))
 

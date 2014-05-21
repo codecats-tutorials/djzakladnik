@@ -2,7 +2,13 @@
 
 
     {% block content %}
-    
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     <article data-ride="carousel" class="carousel slide" id="carousel-example-captions">
       <ol class="carousel-indicators">
         <li class="" data-slide-to="0" data-target="#carousel-example-captions"></li>
